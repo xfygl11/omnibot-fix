@@ -1007,7 +1007,6 @@ private class XiaowanAgentSession(
             customHeaders = providerProfile.customHeaders,
             protocolType = providerProfile.protocolType,
             wireApi = selectedWireApi,
-            contextLimit = providerProfile.contextLimit?.takeIf { it > 0 },
         ).normalizedOrNull()
     }
 }
