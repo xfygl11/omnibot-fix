@@ -49,6 +49,9 @@ jobs:
           rm -rf $ANDROID_SDK_ROOT/cmdline-tools/latest
           mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
           unzip -q /tmp/cmdline-tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools
+          ls -la $ANDROID_SDK_ROOT/cmdline-tools/ || true
+          ls -la $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager 2>/dev/null || echo "sdkmanager not at expected path"
+          which sdkmanager || true
           yes | sdkmanager --licenses >/dev/null 2>&1 || true
           sdkmanager "platforms;android-${{ env.ANDROID_PLATFORM_VERSION }}"
           sdkmanager "ndk;${{ env.NDK_VERSION }}"
