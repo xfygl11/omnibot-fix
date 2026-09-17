@@ -44,7 +44,12 @@ jobs:
 
       - name: Install Android SDK platform and NDK
         run: |
-          sdkmanager --licenses >/dev/null 2>&1 || yes | sdkmanager --licenses
+          sudo apt-get update && sudo apt-get install -y wget
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-12266719_latest.zip -O /tmp/cmdline-tools.zip
+          sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools/latest
+          sudo unzip -q /tmp/cmdline-tools.zip -d /usr/local/lib/android/sdk/cmdline-tools/latest && sudo mv /usr/local/lib/android/sdk/cmdline-tools/latest/cmdline-tools/* /usr/local/lib/android/sdk/cmdline-tools/latest/
+          export PATH="$PATH:/usr/local/lib/android/sdk/cmdline-tools/latest/bin"
+          yes | sdkmanager --licenses >/dev/null 2>&1 || true
           sdkmanager "platforms;android-${{ env.ANDROID_PLATFORM_VERSION }}"
           sdkmanager "ndk;${{ env.NDK_VERSION }}"
           echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/${{ env.NDK_VERSION }}" >> "$GITHUB_ENV"
