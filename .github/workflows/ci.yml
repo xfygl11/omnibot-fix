@@ -44,11 +44,11 @@ jobs:
 
       - name: Install Android SDK platform and NDK
         run: |
+          export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-12266719_latest.zip -O /tmp/cmdline-tools.zip
           rm -rf $ANDROID_SDK_ROOT/cmdline-tools/latest
           mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
           unzip -q /tmp/cmdline-tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools
-          export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
           yes | sdkmanager --licenses >/dev/null 2>&1 || true
           sdkmanager "platforms;android-${{ env.ANDROID_PLATFORM_VERSION }}"
           sdkmanager "ndk;${{ env.NDK_VERSION }}"
