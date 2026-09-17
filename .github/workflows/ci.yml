@@ -44,11 +44,14 @@ jobs:
 
       - name: Install Android SDK platform and NDK
         run: |
-          sudo apt-get update && sudo apt-get install -y wget
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-12266719_latest.zip -O /tmp/cmdline-tools.zip
-          sudo mkdir -p /usr/local/lib/android/sdk/cmdline-tools/latest
-          sudo unzip -q /tmp/cmdline-tools.zip -d /usr/local/lib/android/sdk/cmdline-tools/latest && sudo mv /usr/local/lib/android/sdk/cmdline-tools/latest/cmdline-tools/* /usr/local/lib/android/sdk/cmdline-tools/latest/
-          export PATH="$PATH:/usr/local/lib/android/sdk/cmdline-tools/latest/bin"
+          mkdir -p $ANDROID_SDK_ROOT/cmdline-tools/latest
+          unzip -q /tmp/cmdline-tools.zip -d $ANDROID_SDK_ROOT/cmdline-tools/latest || true
+          if [ -d "$ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools" ]; then
+            mv $ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools/* $ANDROID_SDK_ROOT/cmdline-tools/latest/
+            rm -rf $ANDROID_SDK_ROOT/cmdline-tools/latest/cmdline-tools
+          fi
+          export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
           yes | sdkmanager --licenses >/dev/null 2>&1 || true
           sdkmanager "platforms;android-${{ env.ANDROID_PLATFORM_VERSION }}"
           sdkmanager "ndk;${{ env.NDK_VERSION }}"
