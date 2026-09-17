@@ -61,5 +61,10 @@ jobs:
         working-directory: ui
         run: flutter pub get --enforce-lockfile
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Build debug APK
         run: ./gradlew --no-daemon assembleDevelopStandardDebug -Ptarget=lib/main_standard.dart
