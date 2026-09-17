@@ -2359,6 +2359,7 @@ internal class LocalAcpRuntime(
                 "reasoning_effort",
                 SessionConfigOptionCategory.THOUGHT_LEVEL
             ),
+            "wireApi" to current("wireApi"),
             "collaborationMode" to current("collaboration_mode"),
             "mode" to current("mode", SessionConfigOptionCategory.MODE),
             "configOptions" to options.map(::acpConfigOptionPayload)
@@ -3285,6 +3286,10 @@ internal class LocalAcpRuntime(
                     (
                         requestedId == "mode" &&
                             it.category == SessionConfigOptionCategory.MODE
+                        ) ||
+                    (
+                        requestedId == "wireApi" &&
+                            it.id.value == "wireApi"
                         )
             }
             when (option) {
