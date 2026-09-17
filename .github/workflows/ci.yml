@@ -42,12 +42,9 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           cache: true
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Install Android SDK platform and NDK
         run: |
-          yes | sdkmanager --licenses >/dev/null
+          sdkmanager --licenses >/dev/null 2>&1 || yes | sdkmanager --licenses
           sdkmanager "platforms;android-${{ env.ANDROID_PLATFORM_VERSION }}"
           sdkmanager "ndk;${{ env.NDK_VERSION }}"
           echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/${{ env.NDK_VERSION }}" >> "$GITHUB_ENV"
