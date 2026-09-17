@@ -261,6 +261,8 @@ mixin _ChatInputAreaComposerMixin on _ChatInputAreaStateBase {
 
   Widget _buildSelectedModelOverrideChip() {
     final modelId = (widget.selectedModelOverrideId ?? '').trim();
+    final wireApi = widget.selectedWireApi ?? 'chat_completions';
+    final isResponses = wireApi == 'responses';
     final palette = context.omniPalette;
     final chipColor = context.isDarkTheme
         ? palette.surfaceSecondary
@@ -268,6 +270,9 @@ mixin _ChatInputAreaComposerMixin on _ChatInputAreaStateBase {
     final textColor = context.isDarkTheme
         ? palette.textSecondary
         : const Color(0xFF54627A);
+    final accentColor = context.isDarkTheme
+        ? const Color(0xFF98AD90)
+        : const Color(0xFF2C7FEB);
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
@@ -295,6 +300,24 @@ mixin _ChatInputAreaComposerMixin on _ChatInputAreaStateBase {
                 ),
               ),
             ),
+            if (isResponses) ...[
+              const SizedBox(width: 4),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                decoration: BoxDecoration(
+                  color: accentColor.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Text(
+                  'R',
+                  style: TextStyle(
+                    fontSize: 8,
+                    color: accentColor,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
+            ],
             if (widget.onClearSelectedModelOverride != null) ...[
               const SizedBox(width: 4),
               GestureDetector(

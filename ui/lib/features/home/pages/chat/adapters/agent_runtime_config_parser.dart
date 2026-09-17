@@ -296,6 +296,34 @@ AgentPermissionMode? _extractAgentConfigPermissionMode(
   return null;
 }
 
+String? _extractAgentConfigWireApi(Map<String, dynamic> response) {
+  final direct = response['wireApi'] ?? response['wire_api'];
+  if (direct != null && direct.toString().trim().isNotEmpty) {
+    return direct.toString().trim();
+  }
+  for (final key in const <String>[
+    'config',
+    'effectiveConfig',
+    'effective',
+    'settings',
+    'modelSettings',
+    'model_settings',
+    'data',
+    'result',
+  ]) {
+    final value = response[key];
+    if (value is Map) {
+      final nested = _extractAgentConfigWireApi(
+        value.map((key, nestedValue) => MapEntry(key.toString(), nestedValue)),
+      );
+      if (nested != null) {
+        return nested;
+      }
+    }
+  }
+  return null;
+}
+
 List<String> _mergeAgentReasoningEffortOptions({
   String? current,
   required List<String> options,
@@ -382,11 +410,13 @@ class _AgentRunSettingsSnapshot {
     this.modelId,
     this.reasoningEffort,
     this.permissionMode,
+    this.wireApi,
   });
 
   final String? modelId;
   final String? reasoningEffort;
   final AgentPermissionMode? permissionMode;
+  final String? wireApi;
 }
 
 extension _AgentPermissionModePayload on AgentPermissionMode {

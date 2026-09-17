@@ -733,6 +733,7 @@ mixin _ChatPageAgentMixin on _ChatPageStateBase {
         _agentModelConfigSupported = modelConfigSupported;
         _agentModelOptions = modelOptions;
         _activeAgentModelId = modelConfigSupported ? effectiveModel : null;
+        _activeAgentWireApi = configSettings.wireApi;
         // A user-selected local preference is authoritative for the next
         // turn. Some Harnesses expose a read-only/stale mode in config/read;
         // allowing it to overwrite the selection makes the picker appear
@@ -791,6 +792,7 @@ mixin _ChatPageAgentMixin on _ChatPageStateBase {
         modelId: _extractAgentConfigModelId(response),
         reasoningEffort: _extractAgentConfigReasoningEffort(response),
         permissionMode: _extractAgentConfigPermissionMode(response),
+        wireApi: _extractAgentConfigWireApi(response),
       );
     } catch (error) {
       debugPrint('Read Agent config run settings failed: $error');
@@ -1846,6 +1848,7 @@ mixin _ChatPageAgentMixin on _ChatPageStateBase {
     List<Map<String, dynamic>> attachments = const [],
     String? modelOverride,
     String? collaborationModeOverride,
+    String? wireApiOverride,
   }) async {
     // Freeze the dispatch target before the first await. The page is allowed
     // to switch conversations while status/config/session calls are in
@@ -1869,6 +1872,7 @@ mixin _ChatPageAgentMixin on _ChatPageStateBase {
     final dispatchTerminalEnvironment = _buildAgentTerminalEnvironmentPayload();
     final dispatchActiveModel = _activeAgentModelId;
     final dispatchLoadedModelSource = _loadedAgentModelSourceKey;
+    final dispatchWireApi = wireApiOverride ?? _activeAgentWireApi;
     var dispatchMessages = List<ChatMessageModel>.from(_messages);
     bool isDispatchTargetCurrent() =>
         mounted && dispatchTargetGeneration == _conversationTargetRequestId;
@@ -2093,6 +2097,7 @@ mixin _ChatPageAgentMixin on _ChatPageStateBase {
         model: turnModel,
         effort: dispatchReasoningEffort,
         collaborationMode: dispatchCollaborationMode,
+        wireApi: dispatchWireApi,
         // The Agent page owns ConversationMode.agent. Keep the mode on the
         // canonical ACP prompt so built-in agents read the same durable
         // history bucket that this page writes.

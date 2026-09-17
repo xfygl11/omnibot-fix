@@ -1484,6 +1484,21 @@ mixin _ChatPageUiMixin on _ChatPageStateBase {
                               _showConversationModelMentionChip
                           ? _activeConversationModelOverrideSelection?.modelId
                           : null,
+                      selectedWireApi:
+                          _activeMode == ChatPageMode.agent
+                              ? _activeAgentWireApi
+                              : _activeMode == ChatPageMode.normal &&
+                                      _showConversationModelMentionChip
+                                  ? _modelProviderProfiles
+                                      .where(
+                                        (p) =>
+                                            p.id ==
+                                            _activeConversationModelOverrideSelection
+                                                ?.providerProfileId,
+                                      )
+                                      .firstOrNull
+                                      ?.wireApi
+                                  : null,
                       contextUsageRatio: _activeMode == ChatPageMode.openclaw
                           ? null
                           : _currentConversation?.contextUsageRatio,

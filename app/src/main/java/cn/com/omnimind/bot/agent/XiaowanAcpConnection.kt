@@ -671,6 +671,7 @@ private class XiaowanAgentSession(
     private var cleanupComplete = false
     private val sessionConfig = XiaowanSessionConfig(availableModels, configuredModelId)
     private val selectedModelId: String get() = sessionConfig.model
+    private val selectedWireApi: String get() = sessionConfig.wireApi
     private val executor = OmniAgentExecutor(
         context = context,
         scope = scope,
@@ -997,10 +998,17 @@ private class XiaowanAgentSession(
         val modelId = selectedModelId.trim()
         if (modelId.isEmpty()) return null
         if (!providerProfile.isConfigured()) return null
-        return AgentModelOverride.fromProviderProfile(
-            profile = providerProfile,
+        return cn.com.omnimind.bot.agent.AgentModelOverride(
+            providerProfileId = providerProfile.id.trim(),
+            providerProfileName = providerProfile.name.trim().takeIf { it.isNotEmpty() },
             modelId = modelId,
-        )
+            apiBase = providerProfile.baseUrl,
+            apiKey = providerProfile.apiKey,
+            customHeaders = providerProfile.customHeaders,
+            protocolType = providerProfile.protocolType,
+            wireApi = selectedWireApi,
+            contextLimit = providerProfile.contextLimit?.takeIf { it > 0 },
+        ).normalizedOrNull()
     }
 }
 

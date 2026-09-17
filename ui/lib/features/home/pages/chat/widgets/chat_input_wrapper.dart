@@ -25,6 +25,7 @@ class ChatInputWrapper extends StatelessWidget {
   final VoidCallback? onTriggerSlashCommand;
   final Widget? topBanner;
   final String? selectedModelOverrideId;
+  final String? selectedWireApi;
   final VoidCallback? onClearSelectedModelOverride;
   final double? contextUsageRatio;
   final String? contextUsageTooltipMessage;
@@ -67,6 +68,7 @@ class ChatInputWrapper extends StatelessWidget {
     this.onTriggerSlashCommand,
     this.topBanner,
     this.selectedModelOverrideId,
+    this.selectedWireApi,
     this.onClearSelectedModelOverride,
     this.contextUsageRatio,
     this.contextUsageTooltipMessage,
@@ -117,6 +119,7 @@ class ChatInputWrapper extends StatelessWidget {
             onRemoveAttachment: onRemoveAttachment,
             onTriggerSlashCommand: onTriggerSlashCommand,
             selectedModelOverrideId: selectedModelOverrideId,
+            selectedWireApi: selectedWireApi,
             onClearSelectedModelOverride: onClearSelectedModelOverride,
             contextUsageRatio: contextUsageRatio,
             contextUsageTooltipMessage: contextUsageTooltipMessage,

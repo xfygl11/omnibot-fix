@@ -13,6 +13,8 @@ internal class XiaowanSessionConfig(
         private set
     var effort: String = "default"
         private set
+    var wireApi: String = "chat_completions"
+        private set
     val requestEffort: String? get() = effort.takeUnless { it == "default" }
 
     fun replaceModels(updated: List<ModelInfo>) {
@@ -26,6 +28,8 @@ internal class XiaowanSessionConfig(
             select("reasoning_effort", "Reasoning effort", SessionConfigOptionCategory.THOUGHT_LEVEL,
                 effort, listOf("default" to "Model default", "none" to "Off", "low" to "Low",
                     "medium" to "Medium", "high" to "High", "max" to "Maximum")),
+            select("wireApi", "Wire API", SessionConfigOptionCategory.MODEL, wireApi,
+                listOf("chat_completions" to "Chat Completions", "responses" to "Responses")),
         )
 
     fun set(id: String, value: SessionConfigOptionValue) {
@@ -39,6 +43,7 @@ internal class XiaowanSessionConfig(
         when (id) {
             "model" -> model = selected
             "reasoning_effort" -> effort = selected
+            "wireApi" -> wireApi = selected
         }
     }
 

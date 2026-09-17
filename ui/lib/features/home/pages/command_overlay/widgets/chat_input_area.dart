@@ -154,6 +154,7 @@ class ChatInputArea extends StatefulWidget {
   final ValueChanged<String>? onRemoveAttachment;
   final VoidCallback? onTriggerSlashCommand;
   final String? selectedModelOverrideId;
+  final String? selectedWireApi;
   final VoidCallback? onClearSelectedModelOverride;
   final double? contextUsageRatio;
   final String? contextUsageTooltipMessage;
@@ -194,6 +195,7 @@ class ChatInputArea extends StatefulWidget {
     this.onRemoveAttachment,
     this.onTriggerSlashCommand,
     this.selectedModelOverrideId,
+    this.selectedWireApi,
     this.onClearSelectedModelOverride,
     this.contextUsageRatio,
     this.contextUsageTooltipMessage,
@@ -466,6 +468,7 @@ abstract class _ChatInputAreaStateBase extends State<ChatInputArea>
         oldWidget.useLargeComposerStyle != widget.useLargeComposerStyle ||
         oldWidget.useFrostedGlass != widget.useFrostedGlass ||
         oldWidget.selectedModelOverrideId != widget.selectedModelOverrideId ||
+        oldWidget.selectedWireApi != widget.selectedWireApi ||
         oldWidget.modelPickerSettings != widget.modelPickerSettings) {
       _reportInputHeightAfterBuild();
     }

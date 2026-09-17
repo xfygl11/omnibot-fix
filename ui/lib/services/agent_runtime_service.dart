@@ -1427,6 +1427,7 @@ class AgentRuntimeService {
     String? effort,
     String? collaborationMode,
     String? conversationMode,
+    String? wireApi,
     Map<String, String>? terminalEnvironment,
   }) {
     return _invokeMap('session/prompt', {
@@ -1448,6 +1449,8 @@ class AgentRuntimeService {
         'collaborationMode': collaborationMode.trim(),
       if (conversationMode != null && conversationMode.trim().isNotEmpty)
         'conversationMode': conversationMode.trim(),
+      if (wireApi != null && wireApi.trim().isNotEmpty)
+        'wireApi': wireApi.trim(),
       if (terminalEnvironment != null && terminalEnvironment.isNotEmpty)
         'terminalEnvironment': terminalEnvironment,
       'text': text,

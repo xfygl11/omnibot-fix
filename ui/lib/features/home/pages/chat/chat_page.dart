@@ -298,6 +298,7 @@ abstract class _ChatPageStateBase extends State<ChatPage>
   String? _activeAgentReasoningEffort;
   String? _agentReasoningEffortConfigId;
   String? _activeAgentCollaborationMode;
+  String? _activeAgentWireApi;
   bool _isAgentModelListLoading = false;
   bool _isAgentCollaborationModeListLoading = false;
   String? _agentModelListError;
@@ -1858,6 +1859,7 @@ abstract class _ChatPageStateBase extends State<ChatPage>
     List<Map<String, dynamic>> attachments = const [],
     String? modelOverride,
     String? collaborationModeOverride,
+    String? wireApiOverride,
   });
 
   Future<void> _interruptAgentTurn();
