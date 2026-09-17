@@ -48,7 +48,7 @@ jobs:
           rm -rf $ANDROID_SDK_ROOT/cmdline-tools
           mkdir -p $ANDROID_SDK_ROOT
           unzip -q /tmp/cmdline-tools.zip -d $ANDROID_SDK_ROOT
-          export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
+          export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin"
           yes | sdkmanager --licenses >/dev/null 2>&1 || true
           sdkmanager "platforms;android-${{ env.ANDROID_PLATFORM_VERSION }}"
           sdkmanager "ndk;${{ env.NDK_VERSION }}"
